@@ -6,7 +6,7 @@ pipeline {
             // Get some code from a GitHub repository
                 git(
                 url: "https://github.com/makam1/-spring-boot-tdd.git",
-                branch: "main",
+                branch: "master",
                 changelog: true,
                 poll: true
                 )
