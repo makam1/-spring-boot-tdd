@@ -5,7 +5,7 @@ pipeline {
             steps {
             // Get some code from a GitHub repository
                 git(
-                url: "chemin-de-repo-github",
+                url: "https://github.com/makam1/-spring-boot-tdd.git",
                 branch: "main",
                 changelog: true,
                 poll: true
