@@ -41,7 +41,7 @@ pipeline {
          }
          stage('Remove Unused docker image') {
                 steps{
-                    sh 'docker rmi demo-devsecops:$BUILD_NUMBER'
+                    sh 'docker rmi makam1/demo-devsecops:$BUILD_NUMBER'
                 }
          }
     }
