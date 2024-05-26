@@ -34,8 +34,8 @@ pipeline {
                 steps {
                     withDockerRegistry([credentialsId: "docker-credential", url: ""]) {
                         sh 'printenv'
-                        sh 'docker build -t demo-devsecops:$BUILD_NUMBER .'
-                        sh 'docker push demo-devsecops:$BUILD_NUMBER'
+                        sh 'docker build -t makam1/demo-devsecops:$BUILD_NUMBER .'
+                        sh 'docker push makam1/demo-devsecops:$BUILD_NUMBER'
                     }
                 }
          }
