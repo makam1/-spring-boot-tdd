@@ -44,5 +44,12 @@ pipeline {
                     sh 'docker rmi makam1/demo-devsecops:$BUILD_NUMBER'
                 }
          }
+         stage('Kubernetes Deployment - DEV') {
+                steps { withKubeConfig([credentialsId: 'kubernetes-config']) {
+                    sh "sed -i 's#replace#makam1/demo-devsecops:${BUILD_NUMBER}#g' k8s_deployment_service.yaml"
+                       sh "kubectl apply -f k8s_deployment_service.yaml"
+                    }
+                }
+         }
     }
 }
