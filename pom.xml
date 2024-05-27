@@ -87,6 +87,7 @@
 					<targetTests>
 						<param>com.formation.service.*</param>
 					</targetTests>
+
 					<mutationThreshold>70</mutationThreshold>
 					<outputFormats>
 						<outputFormat>XML</outputFormat>
