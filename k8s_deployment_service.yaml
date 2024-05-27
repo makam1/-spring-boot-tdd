@@ -2,34 +2,34 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: devsecops
-  name: devsecops
+    app: spring
+  name: spring
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: devsecops
+      app: spring
   strategy: {}
   template:
     metadata:
       labels:
-        app: devsecops
+        app: spring
     spec:
       containers:
       - image: replace
-        name: devsecops-container
+        name: spring-container
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: devsecops
-  name: devsecops-svc
+    app: spring
+  name: spring-svc
 spec:
   ports:
   - port: 8180
     protocol: TCP
     targetPort: 8180
   selector:
-    app: devsecops
+    app: spring
   type: NodePort

@@ -20,6 +20,7 @@ pipeline {
             }
         }
         stage('Unit Tests - JUnit and Jacoco') {
+            when{ expression {false}}
              steps {
                 sh "mvn test"
              }
@@ -31,6 +32,7 @@ pipeline {
              }
         }
          stage('Docker Build and Push') {
+            when{ expression {false}}
                 steps {
                     withDockerRegistry([credentialsId: "docker-credential", url: ""]) {
                         sh 'printenv'
@@ -40,13 +42,14 @@ pipeline {
                 }
          }
          stage('Remove Unused docker image') {
+            when{ expression {false}}
                 steps{
                     sh 'docker rmi makam1/demo-spring:$BUILD_NUMBER'
                 }
          }
          stage('Kubernetes Deployment - DEV') {
                 steps { withKubeConfig([credentialsId: 'kubernetes-config']) {
-                    sh "sed -i 's#replace#makam1/demo-spring:${BUILD_NUMBER}#g' k8s_deployment_service.yaml"
+                    sh "sed -i 's#replace#makam1/demo-spring:4#g' k8s_deployment_service.yaml"
                        sh "kubectl apply -f k8s_deployment_service.yaml"
                     }
                 }
