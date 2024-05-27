@@ -20,17 +20,29 @@ pipeline {
             }
         }
         stage('Unit Tests - JUnit and Jacoco') {
-            when{ expression {false}}
              steps {
-                sh "mvn test"
-             }
-             post {
-                 always {
-                     junit 'target/surefire-reports/*.xml'
-                     jacoco execPattern: 'target/jacoco.exec'
+                 sh "mvn test -Dgroups=unitaires"
+                 }
+                 post {
+                    always {
+                        junit 'target/surefire-reports/*.xml'
+                        jacoco execPattern: 'target/jacoco.exec'
                  }
              }
         }
+
+        stage('Service - IntegrationTest') {
+            steps{
+                sh "mvn test -Dgroups=integrations"
+            }
+        }
+
+        stage('Web - IntegrationTest') {
+            steps{
+                sh "mvn test -Dgroups=web"
+            }
+        }
+
          stage('Docker Build and Push') {
             when{ expression {false}}
                 steps {
@@ -48,11 +60,12 @@ pipeline {
                 }
          }
          stage('Kubernetes Deployment - DEV') {
-                steps { withKubeConfig([credentialsId: 'kubernetes-config']) {
-                    sh "sed -i 's#replace#makam1/demo-spring:4#g' k8s_deployment_service.yaml"
-                       sh "kubectl apply -f k8s_deployment_service.yaml --validate=false"
-                    }
+            when { expression { false } }
+            steps { withKubeConfig([credentialsId: 'kubernetes-config']) {
+                sh "sed -i 's#replace#makam1/demo-spring:4#g' k8s_deployment_service.yaml"
+                   sh "kubectl apply -f k8s_deployment_service.yaml --validate=false"
                 }
+            }
          }
     }
 }

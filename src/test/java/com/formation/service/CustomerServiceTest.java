@@ -12,6 +12,7 @@ import com.formation.data.repository.CustomerRepository;
 import com.formation.web.error.ConflictException;
 import com.formation.web.error.NotFoundException;
 import com.formation.web.model.Customer;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class) // 1 : Ajoute MockitoExtension
+@Tag("unitaires")
 public class CustomerServiceTest {
 
   @InjectMocks // 2 : Injecte les mocks dans le service à tester (CustomerService)
