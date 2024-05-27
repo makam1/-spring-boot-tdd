@@ -34,19 +34,19 @@ pipeline {
                 steps {
                     withDockerRegistry([credentialsId: "docker-credential", url: ""]) {
                         sh 'printenv'
-                        sh 'docker build -t makam1/demo-devsecops:$BUILD_NUMBER .'
-                        sh 'docker push makam1/demo-devsecops:$BUILD_NUMBER'
+                        sh 'docker build -t makam1/demo-spring:$BUILD_NUMBER .'
+                        sh 'docker push makam1/demo-spring:$BUILD_NUMBER'
                     }
                 }
          }
          stage('Remove Unused docker image') {
                 steps{
-                    sh 'docker rmi makam1/demo-devsecops:$BUILD_NUMBER'
+                    sh 'docker rmi makam1/demo-spring:$BUILD_NUMBER'
                 }
          }
          stage('Kubernetes Deployment - DEV') {
                 steps { withKubeConfig([credentialsId: 'kubernetes-config']) {
-                    sh "sed -i 's#replace#makam1/demo-devsecops:${BUILD_NUMBER}#g' k8s_deployment_service.yaml"
+                    sh "sed -i 's#replace#makam1/demo-spring:${BUILD_NUMBER}#g' k8s_deployment_service.yaml"
                        sh "kubectl apply -f k8s_deployment_service.yaml"
                     }
                 }
