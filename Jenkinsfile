@@ -50,7 +50,7 @@ pipeline {
          stage('Kubernetes Deployment - DEV') {
                 steps { withKubeConfig([credentialsId: 'kubernetes-config']) {
                     sh "sed -i 's#replace#makam1/demo-spring:4#g' k8s_deployment_service.yaml"
-                       sh "kubectl apply -f k8s_deployment_service.yaml"
+                       sh "kubectl apply -f k8s_deployment_service.yaml --validate=false"
                     }
                 }
          }
