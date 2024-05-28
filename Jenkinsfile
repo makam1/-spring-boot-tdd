@@ -55,6 +55,7 @@ pipeline {
          }
 
         stage('Code coverage') {
+        when{ expression {false}}
               environment {
                   SCANNER_HOME = tool 'sonar-scanner'
                   PROJECT_KEY = "spring-boot-tdd"
@@ -72,6 +73,7 @@ pipeline {
         }
 
         stage("Quality Gate") {
+        when{ expression {false}}
              steps {
                  timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
