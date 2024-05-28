@@ -56,13 +56,13 @@ pipeline {
 
         stage('Code coverage') {
               environment {
-                  SCANNER_HOME = tool 'sonar_scanner'
+                  SCANNER_HOME = tool 'sonar-scanner'
                   PROJECT_KEY = "spring-boot-tdd"
                   PROJECT_NAME = "spring-boot-tdd"
               }
               steps {
                     withSonarQubeEnv('sonar-server') {
-                        sh '''$SCANNER_HOME/bin/sonar_scanner -Dsonar.projectKey=$PROJECT_KEY \
+                        sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=$PROJECT_KEY \
                          -Dsonar.projectName=$PROJECT_NAME \
                          -Dsonar.java.coveragePlugin=jacoco \
                          -Dsonar.jacoco.reportPath=target/jacoco.exec \
