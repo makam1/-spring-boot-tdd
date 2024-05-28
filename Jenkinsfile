@@ -54,6 +54,31 @@ pipeline {
              }
          }
 
+        stage('Code coverage') {
+              environment {
+                  SCANNER_HOME = tool 'sonar_scanner'
+                  PROJECT_KEY = "spring-boot-tdd"
+                  PROJECT_NAME = "spring-boot-tdd"
+              }
+              steps {
+                    withSonarQubeEnv('sonar_server') {
+                        sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=$PROJECT_KEY \
+                         -Dsonar.projectName=$PROJECT_NAME \
+                         -Dsonar.java.coveragePlugin=jacoco \
+                         -Dsonar.jacoco.reportPath=target/jacoco.exec \
+                         -Dsonar.java.binaries=target/classes/ '''
+                    }
+              }
+        }
+
+        stage("Quality Gate") {
+             steps {
+                 timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                 }
+             }
+         }
+
          stage('Docker Build and Push') {
             when{ expression {false}}
                 steps {
