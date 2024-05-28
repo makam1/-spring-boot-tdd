@@ -66,7 +66,8 @@ pipeline {
                          -Dsonar.projectName=$PROJECT_NAME \
                          -Dsonar.java.coveragePlugin=jacoco \
                          -Dsonar.jacoco.reportPath=target/jacoco.exec \
-                         -Dsonar.java.binaries=target/classes/ '''
+                         -Dsonar.java.binaries=target/classes/
+                         -Dsonar.token=sqp_5a1f304932c55ded9d5e29c5a8beb0856f3cf253'''
                     }
               }
         }
